@@ -1,14 +1,17 @@
 #domain
-+ api/v1/bulletin/in/
-+ <h3> name加在後面 ex : api/v1/bulletin/in/all </h3>
++ <h3> api/v1/bulletin/in/ </h3>
++ <h3> name加在後面 ex : api/v1/bulletin/in/all  </h3>
 
 #標頭
 
 + 待補
 
 #errorCode
-+ 400002--> validateFail
-+ 500001--> otherError
+
+
++ <h3> 400002--> validateFail </h3>
++ <h3> 500001--> otherError </h3>
+
 
 ***
 #name
