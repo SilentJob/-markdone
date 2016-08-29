@@ -1,6 +1,7 @@
 #domain
 + <h3> api/v1/bulletin/in/ </h3>
 + <h3> name加在後面 ex : api/v1/bulletin/in/all  </h3>
++ <h3> 如果有參數的話，加在後面 ex : api/v1/bulletin/in/all/3 =>page3 </h3>
 
 #標頭
 
@@ -78,9 +79,9 @@
 + **建立公告**
 
 #Body
-+ **groupId** - 群組ID 1~7
-+ **authorId** - 使用者ID (亦有可能是使用者名稱)
-+ **title** - 標題 
++ **groupId** - 群組ID 1~7 Integer
++ **authorId** - 使用者ID (亦有可能是使用者名稱) Integer
++ **title** - 標題 Max:50
 + **content** - 文章內容
 
 #Response
@@ -134,10 +135,11 @@ or
 #Example Request
 
 ` POST api/v1/bulletin/in/search/4 `
+```
 {
     title:4
 }
-
+```
 #Example Response
 
 200 OK
@@ -165,6 +167,72 @@ or
         "groupName": "問題討論"
       },
       ...
+    ]
+  }
+}
+
+```
+
+or
+
+400 Bad Request
+```
+{
+  "error": {
+    "code": 400002,
+    "message": "validation.required"
+  }
+}
+```
+***
+
+#name
++ searchGroupId
++ POST
++ **查詢群組公告**
+
+#參數
++ 有
+
+#Body
+
++ <h3> **groupId** - 群組ID,請將ID串接成 A,B,C,D 的格式，ex : 1,2,3,4 </h3>
+
+#Example Request
+
+` POST api/v1/bulletin/in/searchGroupId `
+```
+{
+    groupId:1,2,3
+}
+```
+#Example Response
+
+200 OK
+
+```
+
+{
+  "result": {
+    "total": 72,
+    "per_page": 15,
+    "current_page": 1,
+    "last_page": 5,
+    "next_page_url": "http://12.12.12.12/api/v1/bulletin/in/searchGroupId?page=2",
+    "prev_page_url": null,
+    "from": 1,
+    "to": 15,
+    "data": [
+      {
+        "id": 1,
+        "groupId": 2,
+        "authorId": 5,
+        "title": "526",
+        "content": "342",
+        "isTop": 0,
+        "dateTime": "2023-11-06 17:52:00",
+        "groupName": "會議記錄"
+      } ...
     ]
   }
 }
