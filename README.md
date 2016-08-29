@@ -93,15 +93,19 @@
 #Example Response
 
 200 OK
-
+```
 {
   "result": true
 }
+```
 or
+
 400 Bad Request
+```
 {
   "error": {
     "code": 400002,
     "message": "validation.required"
   }
 }
+```
