@@ -1,103 +1,107 @@
-# -markdone
-測試markdone
+#domain
++ api/v1/bulletin/in/
++ name加在後面 ex : api/v1/bulletin/in/all
+
+#標頭
+
++ 待補
+
+#errorCode
++ 400002--> validateFail
++ 500001--> otherError
+
+***
+#name
++ all
+
+#參數
++ all/{page} 用來查詢第幾頁的，不加預設為第一頁
++ 之後查詢的功能都這樣處理
+
+#Body
+
+#Example Request
+
+` GET api/v1/bulletin/in/all/2 `
 
 
 
-## H2
+#Example Response
 
-> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-> consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-> Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
-
-> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-> id sem consectetuer libero luctus adipiscing.
-
-  <br />  
-  <br />  
-  <br />  
-  
-階層式區塊用兩個大於符號(>>)：
-> 新北市
->>板橋區
->>中和區
-
-> 桃園縣
->>大溪鎮
->>龜山鄉
-
-*   Red
-*   Green
-*   Blue
-或
-+   Red
-+   Green
-+   Blue
-或
--   Red
--   Green
--   Blue
--   
-**粗體**
-
-*斜體*
-
-~~刪除線~~
-
-| Left-Aligned  | Center Aligned  | Right Aligned |
-| :------------ |:---------------:| -----:|
-| col 3 is      | some wordy text | $1600 |
-| col 2 is      | centered        |   $12 |
-| zebra stripes | are neat        |    $1 |
-| test | 測試        |    $3333 |
-
-
-```php
-  echo "測試";
-```
-
-##Update User Profile
-
-Update the profile for a specific user account.
-
-PUT /account/{userId}/profile
-
-##Headers
-
-AuthSessionId - Identifier for current session
-AuthSessionSecret - Secret for current session
-
-##Parameters
-
-userId - Identifier for current user
-
-##Body
-
-username - Username to update to
-email - E-mail address to update to
-
-##Response
-
-userId - Identifier for the user
-
-##Errors
-
-ErrorCode1 - Caused by missing identifier
-ErrorCode2 - Username was not given
-ErrorCode3 - Server exploded
-Example Request
-
-` GET /account/1692/profile `
+200 OK
 
 ```
 {
-    username: "NewUsername",
-    email: "Email@Email.com"
+  "result": {
+    "total": 149,
+    "per_page": 15,
+    "current_page": 2,
+    "last_page": 10,
+    "next_page_url": "http://12.12.12.12/api/v1/bulletin/in/all/2?page=3",
+    "prev_page_url": "http://12.12.12.12/api/v1/bulletin/in/all/2?page=1",
+    "from": 16,
+    "to": 30,
+    "data": [
+      {
+        "id": 134,
+        "groupId": 2,
+        "authorId": 2,
+        "title": "751",
+        "isTop": 0,
+        "dateTime": "2023-11-12 02:48:00",
+        "groupName": "會議記錄"
+      },
+      {
+        "id": 133,
+        "groupId": 7,
+        "authorId": 7,
+        "title": "734",
+        "isTop": 0,
+        "dateTime": "2023-11-12 01:47:00",
+        "groupName": "其他公告"
+      },
+      ....
+    ]
+  }
 }
 ```
-`Example Response`
+***
+# name
++ create
 
-`200 OK`
+#Body
++ **groupId** - 群組ID 1~7
++ **authorId** - 使用者ID (亦有可能是使用者名稱)
++ **title** - 標題 
++ **content** - 文章內容
 
-`{
-    userId: 1692
-}`
+#Response
++ **成功的時候** - {"result":true}
++ **失敗的時候** - {"error":{"code":errorCode,"message":"XXX"}}
+
+#Example Request
+
+`POST api/v1/bulletin/in/create `
+
+{
+    groupId:1
+    authorId:20
+    title:測試
+    content:qq
+}
+
+#Example Response
+
+200 OK
+
+{
+  "result": true
+}
+or
+400 Bad Request
+{
+  "error": {
+    "code": 400002,
+    "message": "validation.required"
+  }
+}
