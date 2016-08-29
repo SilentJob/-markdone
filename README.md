@@ -254,3 +254,49 @@ or
 ```
 ***
 ***
+
+#name
+
++ alter
++ PUT
++ 修改公告
+
+#Body
+
++  **id** - 文章id Integer
++  **title** - 文章標題 max:50
++  **content** - 文章內容
+
+#Example Request
+
+` PUT api/v1/bulletin/in/alter `
+```
+{
+    id:1
+    title:測試
+    content:qq
+}
+```
+#Example Response
+
+200 OK
+
+```
+{
+  "result": true
+}
+```
+
+or
+
+400 Bad Request
+```
+{
+  "error": {
+    "code": 400002,
+    "message": "validation.required"
+  }
+}
+```
+***
+***
