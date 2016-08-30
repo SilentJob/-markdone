@@ -3,8 +3,8 @@
 1. [創建公告](#CreateBulletin)
 2. [修改公告](#alter)
 3. [刪除公告](#delete)
-4. [Update Role User](#UpdateRoleUser)
-5. [Delete User](#DeleteUser)
+4. [公告留言](#comment)
+5. [刪除留言](#deleteComment)
 
 ## 1.<a name="CreateBulletin">創建公告</a>
 
@@ -35,11 +35,6 @@
         <td style="width:100px ">in:[1~7]</td>
     </tr>
     <tr>
-        <td style="width:50px">Integer'</td>
-        <td style="width:150px">authorId</td>
-        <td style="width:50px">✔︎</td>
-        <td style="width:100px"></td>
-    </tr><tr>
         <td style="width:50px">Sting</td>
         <td style="width:150px">title</td>
         <td style="width:50px">✔︎</td>
@@ -86,7 +81,34 @@
         <td style="width:400px">/api/v1/bulletin/in/alter</td>
     </tr>
 </table>
+### Input Parameter
 
+<table>
+    <tr>
+        <td style="width:50px">Type</td>
+        <td style="width:150px">Name</td>
+        <td style="width:50px">Require</td>
+        <td style="width:100px">Remark</td>
+    </tr>
+    <tr>
+        <td style="width:50px">Integer</td>
+        <td style="width:150px">id</td>
+        <td style="width:50px">✔︎</td>
+        <td style="width:100px "></td>
+    </tr>
+    <tr>
+        <td style="width:50px">Sting</td>
+        <td style="width:150px">title</td>
+        <td style="width:50px">✔︎</td>
+        <td style="width:100px">max:50</td>
+    </tr>
+    <tr>
+        <td style="width:50px">text</td>
+        <td style="width:150px">content</td>
+        <td style="width:50px">✔︎</td>
+        <td style="width:100px"></td>
+    </tr>
+</table>
 ### JSON Response
 #### Success
 200 OK
@@ -99,6 +121,7 @@
 
 
 #### Error
+400 Bad Request
 ```
 {
   "error": {
@@ -139,37 +162,27 @@
 
 ### JSON Response
 #### Success
+200 OK
+
 ```
-status code:200
 {
-  "Users": [
-    {
-    	"id": *id*,
-		"uid": *uid*,
-		"email": *email*,
-		"name": *name*,
-		"role": *role*,
-		"created_at": *createTime*,
-		"updated_at": *updateTime*
-    }
-  ]
+  "result": true
 }
 ```
+
 
 #### Error
+400 Bad Request
 ```
-status code:403
 {
-  "message": "The email does not exist"
-}
-- or -
-status code:403
-{
-  "message": "Permission denied"
+  "error": {
+    "code": 400002,
+    "message": "validation.required"
+  }
 }
 ```
 
-## 4.<a name="UpdateRoleUser">Update Role User</a>
+## 4.<a name="comment">公告留言</a>
 <table>
     <tr>
         <td style="width:50px">Method</td>
@@ -177,7 +190,7 @@ status code:403
     </tr>
     <tr>
         <td style="width:50px">POST</td>
-        <td style="width:400px">/api/v1/admin/role</td>
+        <td style="width:400px">/api/v1/bulletin/in/comment</td>
     </tr>
 </table>
 
@@ -191,52 +204,47 @@ status code:403
         <td style="width:100px">Remark</td>
     </tr>
     <tr>
-        <td style="width:50px">String</td>
-        <td style="width:150px">email</td>
+        <td style="width:50px">Integer</td>
+        <td style="width:150px">bulletinId</td>
         <td style="width:50px">✔︎</td>
         <td style="width:100px"></td>
     </tr>
     <tr>
-        <td style="width:50px">String</td>
-        <td style="width:150px">role</td>
+        <td style="width:50px">Integer</td>
+        <td style="width:150px">authorId</td>
         <td style="width:50px">✔︎</td>
-        <td style="width:100px">admin or user</td>
+        <td style="width:100px"></td>
+    </tr><tr>
+        <td style="width:50px">String</td>
+        <td style="width:150px">comment</td>
+        <td style="width:50px">✔︎</td>
+        <td style="width:100px">留言 max:50</td>
     </tr>
 </table>
 
 ### JSON Response
 #### Success
+200 OK
+
 ```
-status code:200
 {
-  "Users": [
-    {
-    	"id": *id*,
-		"uid": *uid*,
-		"email": *email*,
-		"name": *name*,
-		"role": *role*,
-		"created_at": *createTime*,
-		"updated_at": *updateTime*
-    }
-  ]
+  "result": true
 }
 ```
+
 
 #### Error
+400 Bad Request
 ```
-status code:403
 {
-  "message": "The email does not exist"
-}
-- or -
-status code:403
-{
-  "message": "Permission denied"
+  "error": {
+    "code": 400002,
+    "message": "validation.required"
+  }
 }
 ```
 
-## 5.<a name="DeleteUser">Delete User</a>
+## 5.<a name="deleteComment">刪除留言</a>
 <table>
     <tr>
         <td style="width:50px">Method</td>
@@ -244,34 +252,43 @@ status code:403
     </tr>
     <tr>
         <td style="width:50px">DELETE</td>
-        <td style="width:400px">/api/v1/admin/delete/{email}</td>
+        <td style="width:400px">/api/v1/bulletin/in/deleteComment</td>
     </tr>
 </table>
+### Input Parameter
 
+<table>
+    <tr>
+        <td style="width:50px">Type</td>
+        <td style="width:150px">Name</td>
+        <td style="width:50px">Require</td>
+        <td style="width:100px">Remark</td>
+    </tr>
+    <tr>
+        <td style="width:50px">Integer</td>
+        <td style="width:150px">id</td>
+        <td style="width:50px">✔︎</td>
+        <td style="width:100px">該留言的id</td>
+    </tr>
+    
+</table>
 ### JSON Response
-#### Success
+200 OK
+
 ```
-status code:200
 {
-  "message": "The user has been deleted"
+  "result": true
 }
 ```
 
 #### Error
+400 Bad Request
 ```
-status code:403
 {
-  "message": "The email does not exist"
-}
-- or -
-status code:403
-{
-  "message": "Permission denied"
-}
-- or -
-status code:403
-{
-  "message": "The delete user operation failed"
+  "error": {
+    "code": 400002,
+    "message": "validation.required"
+  }
 }
 ```
 
